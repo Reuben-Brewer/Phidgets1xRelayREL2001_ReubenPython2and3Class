@@ -1,4 +1,5 @@
 ########################  
+
 Phidgets1xRelayREL2001_ReubenPython2and3Class
 
 Wrapper (including ability to hook to Tkinter GUI) to control Phidgets 1-relay controller REL2001 (VINT).
@@ -25,7 +26,7 @@ www.reubotics.com
 
 Apache 2 License
 
-Software Revision C, 11/12/2021
+Software Revision D, 03/13/2022
 
 Verified working on: 
 Python 2.7, 3.8.
