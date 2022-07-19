@@ -5,7 +5,6 @@ Phidgets1xRelayREL2001_ReubenPython2and3Class
 Wrapper (including ability to hook to Tkinter GUI) to control Phidgets 1-relay controller REL2001 (VINT).
 
 From Phidgets' website:
-
 "The REL2002 is a simple, easy to use, mechanical relay.
 This Phidget connects to your computer through a VINT Hub.
 Rated for 210W of DC power or 1750 VA of AC power.
@@ -45,7 +44,13 @@ Raspberry Pi Buster
 
 ########################### Python module installation instructions, all OS's
 
-['future.builtins', 'Phidget22']
+Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies: ['future.builtins', 'Phidget22'']
+
+Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_TestProgram: ['future.builtins', 'MyPrint_ReubenPython2and3Class']
+
+Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_NestedLayers: ['future.builtins']
+
+Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_All: ['future.builtins', 'MyPrint_ReubenPython2and3Class', 'Phidget22']
 
 https://pypi.org/project/Phidget22/#files
 
