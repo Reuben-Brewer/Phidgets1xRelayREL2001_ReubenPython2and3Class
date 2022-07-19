@@ -841,7 +841,7 @@ class Phidgets1xRelayREL2001_ReubenPython2and3Class(Frame): #Subclass the Tkinte
 
         #################################################
         self.DigitalOutputs_Label = Label(self.myFrame, text="DigitalOutputs_Label", width=70)
-        self.DigitalOutputs_Label.grid(row=0, column=1, padx=5, pady=1, columnspan=1, rowspan=10)
+        self.DigitalOutputs_Label.grid(row=0, column=1, padx=5, pady=1, columnspan=1, rowspan=1)
         #################################################
         
         #################################################
@@ -857,7 +857,7 @@ class Phidgets1xRelayREL2001_ReubenPython2and3Class(Frame): #Subclass the Tkinte
         #########################################################
         self.PrintToGui_Label = Label(self.myFrame, text="PrintToGui_Label", width=75)
         if self.EnableInternal_MyPrint_Flag == 1:
-            self.PrintToGui_Label.grid(row=0, column=2, padx=1, pady=1, columnspan=1, rowspan=10)
+            self.PrintToGui_Label.grid(row=2, column=0, padx=1, pady=1, columnspan=2, rowspan=10)
         #########################################################
 
         #########################################################

@@ -128,6 +128,10 @@ def ExitProgram_Callback():
 ##########################################################################################################
 def GUI_Thread():
     global root
+    global root_Xpos
+    global root_Ypos
+    global root_width
+    global root_height
     global GUI_RootAfterCallbackInterval_Milliseconds
     global USE_TABS_IN_GUI_FLAG
 
@@ -181,6 +185,8 @@ def GUI_Thread():
 
     #################################################
     root.protocol("WM_DELETE_WINDOW", ExitProgram_Callback)  # Set the callback function for when the window's closed.
+    root.title("test_program_for_Phidgets1xRelayREL2001_ReubenPython2and3Class")
+    root.geometry('%dx%d+%d+%d' % (root_width, root_height, root_Xpos, root_Ypos)) # set the dimensions of the screen and where it is placed
     root.after(GUI_RootAfterCallbackInterval_Milliseconds, GUI_update_clock)
     root.mainloop()
     #################################################
@@ -296,7 +302,7 @@ if __name__ == '__main__':
     global root
 
     global root_Xpos
-    root_Xpos = 70
+    root_Xpos = 900
 
     global root_Ypos
     root_Ypos = 0
@@ -390,7 +396,7 @@ if __name__ == '__main__':
     global Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_setup_dict
     Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_setup_dict = dict([("GUIparametersDict", Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_GUIparametersDict),
                                                                            ("VINT_DesiredSerialNumber", 620554), #CHANGE THIS TO MATCH YOUR UNIQUE VINT
-                                                                           ("VINT_DesiredPortNumber", 4), #CHANGE THIS TO MATCH YOUR UNIQUE VINT
+                                                                           ("VINT_DesiredPortNumber", 0), #CHANGE THIS TO MATCH YOUR UNIQUE VINT
                                                                            ("DesiredDeviceID", 96),
                                                                            ("WaitForAttached_TimeoutDuration_Milliseconds", 5000),
                                                                            ("NameToDisplay_UserSet", "Reuben's Test 1xRelay REL2001_0"),
