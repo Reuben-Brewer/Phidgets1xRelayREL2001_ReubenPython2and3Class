@@ -23,7 +23,7 @@ www.reubotics.com
 
 Apache 2 License
 
-Software Revision D, 03/13/2022
+Software Revision E, 07/18/2022
 
 Verified working on: 
 Python 2.7, 3.8.
@@ -36,6 +36,8 @@ Raspberry Pi Buster
 ########################  
 
 ########################### Python module installation instructions, all OS's
+
+['future.builtins', 'Phidget22']
 
 https://pypi.org/project/Phidget22/#files
 
