@@ -60,7 +60,6 @@ if platform.system() == "Windows":
 #########################################################
 
 #########################################################
-#To install Phidget22, enter folder "Phidget22Python_1.0.0.20190107\Phidget22Python" and type "python setup.py install"
 from Phidget22.PhidgetException import *
 from Phidget22.Phidget import *
 from Phidget22.Devices.Log import *
@@ -77,7 +76,7 @@ class Phidgets1xRelayREL2001_ReubenPython2and3Class(Frame): #Subclass the Tkinte
         print("#################### Phidgets1xRelayREL2001_ReubenPython2and3Class __init__ starting. ####################")
 
         self.EXIT_PROGRAM_FLAG = 0
-        self.OBJECT_CREATED_SUCCESSFULLY_FLAG = -1
+        self.OBJECT_CREATED_SUCCESSFULLY_FLAG = 0
         self.EnableInternal_MyPrint_Flag = 0
         self.MainThread_still_running_flag = 0
 
@@ -295,7 +294,6 @@ class Phidgets1xRelayREL2001_ReubenPython2and3Class(Frame): #Subclass the Tkinte
             except:
                 print("Phidgets1xRelayREL2001_ReubenPython2and3Class __init__: Error, VINT_DesiredSerialNumber invalid.")
         else:
-            self.OBJECT_CREATED_SUCCESSFULLY_FLAG = 0
             print("Phidgets1xRelayREL2001_ReubenPython2and3Class __init__: Error, must initialize object with 'VINT_DesiredSerialNumber' argument.")
             return
 
@@ -311,7 +309,6 @@ class Phidgets1xRelayREL2001_ReubenPython2and3Class(Frame): #Subclass the Tkinte
             except:
                 print("Phidgets1xRelayREL2001_ReubenPython2and3Class __init__: Error, VINT_DesiredPortNumber invalid.")
         else:
-            self.OBJECT_CREATED_SUCCESSFULLY_FLAG = 0
             print("Phidgets1xRelayREL2001_ReubenPython2and3Class __init__: Error, must initialize object with 'VINT_DesiredPortNumber' argument.")
             return
 
@@ -327,7 +324,6 @@ class Phidgets1xRelayREL2001_ReubenPython2and3Class(Frame): #Subclass the Tkinte
             except:
                 print("Phidgets1xRelayREL2001_ReubenPython2and3Class __init__: Error, DesiredDeviceID invalid.")
         else:
-            self.OBJECT_CREATED_SUCCESSFULLY_FLAG = 0
             print("Phidgets1xRelayREL2001_ReubenPython2and3Class __init__: Error, must initialize object with 'DesiredDeviceID' argument.")
             return
 

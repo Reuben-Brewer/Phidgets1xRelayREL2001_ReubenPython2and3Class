@@ -37,7 +37,10 @@ Raspberry Pi Buster
 
 ########################### Python module installation instructions, all OS's
 
-['future.builtins', 'Phidget22']
+Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies: ['future.builtins', 'Phidget22'']
+Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_TestProgram: ['future.builtins', 'MyPrint_ReubenPython2and3Class']
+Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_NestedLayers: ['future.builtins']
+Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_All: ['future.builtins', 'MyPrint_ReubenPython2and3Class', 'Phidget22']
 
 https://pypi.org/project/Phidget22/#files
 
