@@ -6,7 +6,7 @@ reuben.brewer@gmail.com,
 www.reubotics.com
 
 Apache 2 License
-Software Revision E, 07/18/2022
+Software Revision F, 08/29/2022
 
 Verified working on: Python 2.7, 3.8 for Windows 8.1, 10 64-bit and Raspberry Pi Buster (no Mac testing yet).
 '''
@@ -36,13 +36,6 @@ else:
     from tkinter import * #Python 3
     import tkinter.font as tkFont #Python 3
     from tkinter import ttk
-#########################################################
-
-#########################################################
-if sys.version_info[0] < 3:
-    from builtins import raw_input as input
-else:
-    from future.builtins import input as input #"sudo pip3 install future" (Python 3) AND "sudo pip install future" (Python 2)
 #########################################################
 
 #########################################################
@@ -395,8 +388,8 @@ if __name__ == '__main__':
 
     global Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_setup_dict
     Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_setup_dict = dict([("GUIparametersDict", Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_GUIparametersDict),
-                                                                           ("VINT_DesiredSerialNumber", 620554), #CHANGE THIS TO MATCH YOUR UNIQUE VINT
-                                                                           ("VINT_DesiredPortNumber", 0), #CHANGE THIS TO MATCH YOUR UNIQUE VINT
+                                                                           ("VINT_DesiredSerialNumber", -1), #-1 MEANS ANY SN, CHANGE THIS TO MATCH YOUR UNIQUE VINT
+                                                                           ("VINT_DesiredPortNumber", 4), #CHANGE THIS TO MATCH YOUR UNIQUE VINT
                                                                            ("DesiredDeviceID", 96),
                                                                            ("WaitForAttached_TimeoutDuration_Milliseconds", 5000),
                                                                            ("NameToDisplay_UserSet", "Reuben's Test 1xRelay REL2001_0"),
@@ -406,7 +399,6 @@ if __name__ == '__main__':
     if USE_RELAY_FLAG == 1:
         try:
             Phidgets1xRelayREL2001_ReubenPython2and3ClassObject = Phidgets1xRelayREL2001_ReubenPython2and3Class(Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_setup_dict)
-            time.sleep(0.25)
             RELAY_OPEN_FLAG = Phidgets1xRelayREL2001_ReubenPython2and3ClassObject.OBJECT_CREATED_SUCCESSFULLY_FLAG
 
         except:
@@ -438,7 +430,6 @@ if __name__ == '__main__':
 
         try:
             MyPrint_ReubenPython2and3ClassObject = MyPrint_ReubenPython2and3Class(MyPrint_ReubenPython2and3ClassObject_setup_dict)
-            time.sleep(0.25)
             MYPRINT_OPEN_FLAG = MyPrint_ReubenPython2and3ClassObject.OBJECT_CREATED_SUCCESSFULLY_FLAG
 
         except:
@@ -452,8 +443,7 @@ if __name__ == '__main__':
     #################################################
     if USE_RELAY_FLAG == 1 and RELAY_OPEN_FLAG != 1:
         print("Failed to open Phidgets1xRelayREL2001_ReubenPython2and3Class.")
-        input("Press any key (and enter) to exit.")
-        sys.exit()
+        ExitProgram_Callback()
     #################################################
     #################################################
 
@@ -461,8 +451,7 @@ if __name__ == '__main__':
     #################################################
     if USE_MYPRINT_FLAG == 1 and MYPRINT_OPEN_FLAG != 1:
         print("Failed to open MyPrint_ReubenPython2and3ClassObject.")
-        input("Press any key (and enter) to exit.")
-        sys.exit()
+        ExitProgram_Callback()
     #################################################
     #################################################
 
@@ -478,7 +467,7 @@ if __name__ == '__main__':
         ###################################################
 
         ###################################################
-        if USE_RELAY_FLAG == 1:
+        if RELAY_OPEN_FLAG == 1:
 
             ##################### SET's
             if USE_CycleThroughRelayStatesForTesting_FLAG == 1:
