@@ -6,7 +6,7 @@ reuben.brewer@gmail.com,
 www.reubotics.com
 
 Apache 2 License
-Software Revision G, 09/21/2022
+Software Revision H, 05/10/2023
 
 Verified working on: Python 2.7, 3.8 for Windows 8.1, 10 64-bit and Raspberry Pi Buster (no Mac testing yet).
 '''
@@ -59,9 +59,9 @@ def getPreciseSecondsTimeStampString():
 ##########################################################################################################
 def TestButtonResponse():
     global MyPrint_ReubenPython2and3ClassObject
-    global USE_MYPRINT_FLAG
+    global USE_MyPrint_FLAG
 
-    if USE_MYPRINT_FLAG == 1:
+    if USE_MyPrint_FLAG == 1:
         MyPrint_ReubenPython2and3ClassObject.my_print("Test Button was Pressed!")
     else:
         print("Test Button was Pressed!")
@@ -77,12 +77,12 @@ def GUI_update_clock():
     global USE_GUI_FLAG
 
     global Phidgets1xRelayREL2001_ReubenPython2and3ClassObject
-    global RELAY_OPEN_FLAG
-    global SHOW_IN_GUI_RELAY_FLAG
+    global Phidgets1xRelayREL2001_OPEN_FLAG
+    global SHOW_IN_GUI_Phidgets1xRelayREL2001_FLAG
 
     global MyPrint_ReubenPython2and3ClassObject
-    global MYPRINT_OPEN_FLAG
-    global SHOW_IN_GUI_MYPRINT_FLAG
+    global MyPrint_OPEN_FLAG
+    global SHOW_IN_GUI_MyPrint_FLAG
 
     if USE_GUI_FLAG == 1:
         if EXIT_PROGRAM_FLAG == 0:
@@ -90,12 +90,12 @@ def GUI_update_clock():
         #########################################################
 
             #########################################################
-            if RELAY_OPEN_FLAG == 1 and SHOW_IN_GUI_RELAY_FLAG == 1:
+            if Phidgets1xRelayREL2001_OPEN_FLAG == 1 and SHOW_IN_GUI_Phidgets1xRelayREL2001_FLAG == 1:
                 Phidgets1xRelayREL2001_ReubenPython2and3ClassObject.GUI_update_clock()
             #########################################################
 
             #########################################################
-            if MYPRINT_OPEN_FLAG == 1 and SHOW_IN_GUI_MYPRINT_FLAG == 1:
+            if MyPrint_OPEN_FLAG == 1 and SHOW_IN_GUI_MyPrint_FLAG == 1:
                 MyPrint_ReubenPython2and3ClassObject.GUI_update_clock()
             #########################################################
 
@@ -138,15 +138,15 @@ def GUI_Thread():
     #################################################
     global TabControlObject
     global Tab_MainControls
-    global Tab_RELAY
+    global Tab_Phidgets1xRelayREL2001
     global Tab_MyPrint
 
     if USE_TABS_IN_GUI_FLAG == 1:
         #################################################
         TabControlObject = ttk.Notebook(root)
 
-        Tab_RELAY = ttk.Frame(TabControlObject)
-        TabControlObject.add(Tab_RELAY, text='   RELAY   ')
+        Tab_Phidgets1xRelayREL2001 = ttk.Frame(TabControlObject)
+        TabControlObject.add(Tab_Phidgets1xRelayREL2001, text='   RELAY   ')
 
         Tab_MainControls = ttk.Frame(TabControlObject)
         TabControlObject.add(Tab_MainControls, text='   Main Controls   ')
@@ -164,7 +164,7 @@ def GUI_Thread():
     else:
         #################################################
         Tab_MainControls = root
-        Tab_RELAY = root
+        Tab_Phidgets1xRelayREL2001 = root
         Tab_MyPrint = root
         #################################################
 
@@ -228,11 +228,11 @@ if __name__ == '__main__':
     global USE_TABS_IN_GUI_FLAG
     USE_TABS_IN_GUI_FLAG = 1
 
-    global USE_RELAY_FLAG
-    USE_RELAY_FLAG = 1
+    global USE_Phidgets1xRelayREL2001_FLAG
+    USE_Phidgets1xRelayREL2001_FLAG = 1
 
-    global USE_MYPRINT_FLAG
-    USE_MYPRINT_FLAG = 1
+    global USE_MyPrint_FLAG
+    USE_MyPrint_FLAG = 1
 
     global USE_CycleThroughRelayStatesForTesting_FLAG
     USE_CycleThroughRelayStatesForTesting_FLAG = 1
@@ -241,43 +241,43 @@ if __name__ == '__main__':
 
     #################################################
     #################################################
-    global SHOW_IN_GUI_RELAY_FLAG
-    SHOW_IN_GUI_RELAY_FLAG = 1
+    global SHOW_IN_GUI_Phidgets1xRelayREL2001_FLAG
+    SHOW_IN_GUI_Phidgets1xRelayREL2001_FLAG = 1
 
-    global SHOW_IN_GUI_MYPRINT_FLAG
-    SHOW_IN_GUI_MYPRINT_FLAG = 1
+    global SHOW_IN_GUI_MyPrint_FLAG
+    SHOW_IN_GUI_MyPrint_FLAG = 1
     #################################################
     #################################################
 
     #################################################
     #################################################
-    global GUI_ROW_RELAYS
-    global GUI_COLUMN_RELAYS
-    global GUI_PADX_RELAYS
-    global GUI_PADY_RELAYS
-    global GUI_ROWSPAN_RELAYS
-    global GUI_COLUMNSPAN_RELAYS
-    GUI_ROW_RELAYS = 1
+    global GUI_ROW_Phidgets1xRelayREL2001
+    global GUI_COLUMN_Phidgets1xRelayREL2001
+    global GUI_PADX_Phidgets1xRelayREL2001
+    global GUI_PADY_Phidgets1xRelayREL2001
+    global GUI_ROWSPAN_Phidgets1xRelayREL2001
+    global GUI_COLUMNSPAN_Phidgets1xRelayREL2001
+    GUI_ROW_Phidgets1xRelayREL2001 = 1
 
-    GUI_COLUMN_RELAYS = 0
-    GUI_PADX_RELAYS = 1
-    GUI_PADY_RELAYS = 1
-    GUI_ROWSPAN_RELAYS = 1
-    GUI_COLUMNSPAN_RELAYS = 1
+    GUI_COLUMN_Phidgets1xRelayREL2001 = 0
+    GUI_PADX_Phidgets1xRelayREL2001 = 1
+    GUI_PADY_Phidgets1xRelayREL2001 = 1
+    GUI_ROWSPAN_Phidgets1xRelayREL2001 = 1
+    GUI_COLUMNSPAN_Phidgets1xRelayREL2001 = 1
 
-    global GUI_ROW_MYPRINT
-    global GUI_COLUMN_MYPRINT
-    global GUI_PADX_MYPRINT
-    global GUI_PADY_MYPRINT
-    global GUI_ROWSPAN_MYPRINT
-    global GUI_COLUMNSPAN_MYPRINT
-    GUI_ROW_MYPRINT = 2
+    global GUI_ROW_MyPrint
+    global GUI_COLUMN_MyPrint
+    global GUI_PADX_MyPrint
+    global GUI_PADY_MyPrint
+    global GUI_ROWSPAN_MyPrint
+    global GUI_COLUMNSPAN_MyPrint
+    GUI_ROW_MyPrint = 2
 
-    GUI_COLUMN_MYPRINT = 0
-    GUI_PADX_MYPRINT = 1
-    GUI_PADY_MYPRINT = 1
-    GUI_ROWSPAN_MYPRINT = 1
-    GUI_COLUMNSPAN_MYPRINT = 1
+    GUI_COLUMN_MyPrint = 0
+    GUI_PADX_MyPrint = 1
+    GUI_PADY_MyPrint = 1
+    GUI_ROWSPAN_MyPrint = 1
+    GUI_COLUMNSPAN_MyPrint = 1
     #################################################
     #################################################
 
@@ -308,7 +308,7 @@ if __name__ == '__main__':
 
     global TabControlObject
     global Tab_MainControls
-    global Tab_RELAY
+    global Tab_Phidgets1xRelayREL2001
     global Tab_MyPrint
 
     global GUI_RootAfterCallbackInterval_Milliseconds
@@ -329,20 +329,20 @@ if __name__ == '__main__':
     #################################################
     global Phidgets1xRelayREL2001_ReubenPython2and3ClassObject
 
-    global RELAY_OPEN_FLAG
-    RELAY_OPEN_FLAG = -1
+    global Phidgets1xRelayREL2001_OPEN_FLAG
+    Phidgets1xRelayREL2001_OPEN_FLAG = -1
 
-    global RELAY_MostRecentDict
-    RELAY_MostRecentDict = dict()
+    global Phidgets1xRelayREL2001_MostRecentDict
+    Phidgets1xRelayREL2001_MostRecentDict = dict()
 
-    global RELAY_MostRecentDict_DigitalOutputsList_State
-    RELAY_MostRecentDict_DigitalOutputsList_State = [-1]*1
+    global Phidgets1xRelayREL2001_MostRecentDict_DigitalOutputsList_State
+    Phidgets1xRelayREL2001_MostRecentDict_DigitalOutputsList_State = [-1]*1
 
-    global RELAY_MostRecentDict_DigitalOutputsList_ErrorCallbackFiredFlag
-    RELAY_MostRecentDict_DigitalOutputsList_ErrorCallbackFiredFlag = [-1]*1
+    global Phidgets1xRelayREL2001_MostRecentDict_DigitalOutputsList_ErrorCallbackFiredFlag
+    Phidgets1xRelayREL2001_MostRecentDict_DigitalOutputsList_ErrorCallbackFiredFlag = [-1]*1
 
-    global RELAY_MostRecentDict_Time
-    RELAY_MostRecentDict_Time = -11111.0
+    global Phidgets1xRelayREL2001_MostRecentDict_Time
+    Phidgets1xRelayREL2001_MostRecentDict_Time = -11111.0
     #################################################
     #################################################
 
@@ -350,8 +350,8 @@ if __name__ == '__main__':
     #################################################
     global MyPrint_ReubenPython2and3ClassObject
 
-    global MYPRINT_OPEN_FLAG
-    MYPRINT_OPEN_FLAG = -1
+    global MyPrint_OPEN_FLAG
+    MyPrint_OPEN_FLAG = -1
     #################################################
     #################################################
 
@@ -366,7 +366,7 @@ if __name__ == '__main__':
     else:
         root = None
         Tab_MainControls = None
-        Tab_RELAY = None
+        Tab_Phidgets1xRelayREL2001 = None
         Tab_MyPrint = None
     #################################################
     #################################################
@@ -374,32 +374,32 @@ if __name__ == '__main__':
     #################################################
     #################################################
     global Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_GUIparametersDict
-    Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_GUIparametersDict = dict([("USE_GUI_FLAG", USE_GUI_FLAG and SHOW_IN_GUI_RELAY_FLAG),
-                                    ("root", Tab_RELAY),
+    Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_GUIparametersDict = dict([("USE_GUI_FLAG", USE_GUI_FLAG and SHOW_IN_GUI_Phidgets1xRelayREL2001_FLAG),
+                                    ("root", Tab_Phidgets1xRelayREL2001),
                                     ("EnableInternal_MyPrint_Flag", 1),
                                     ("NumberOfPrintLines", 10),
                                     ("UseBorderAroundThisGuiObjectFlag", 0),
-                                    ("GUI_ROW", GUI_ROW_RELAYS),
-                                    ("GUI_COLUMN", GUI_COLUMN_RELAYS),
-                                    ("GUI_PADX", GUI_PADX_RELAYS),
-                                    ("GUI_PADY", GUI_PADY_RELAYS),
-                                    ("GUI_ROWSPAN", GUI_ROWSPAN_RELAYS),
-                                    ("GUI_COLUMNSPAN", GUI_COLUMNSPAN_RELAYS)])
+                                    ("GUI_ROW", GUI_ROW_Phidgets1xRelayREL2001),
+                                    ("GUI_COLUMN", GUI_COLUMN_Phidgets1xRelayREL2001),
+                                    ("GUI_PADX", GUI_PADX_Phidgets1xRelayREL2001),
+                                    ("GUI_PADY", GUI_PADY_Phidgets1xRelayREL2001),
+                                    ("GUI_ROWSPAN", GUI_ROWSPAN_Phidgets1xRelayREL2001),
+                                    ("GUI_COLUMNSPAN", GUI_COLUMNSPAN_Phidgets1xRelayREL2001)])
 
     global Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_setup_dict
     Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_setup_dict = dict([("GUIparametersDict", Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_GUIparametersDict),
-                                                                           ("VINT_DesiredSerialNumber", -1), #-1 MEANS ANY SN, CHANGE THIS TO MATCH YOUR UNIQUE VINT
-                                                                           ("VINT_DesiredPortNumber", 4), #CHANGE THIS TO MATCH YOUR UNIQUE VINT
+                                                                           ("VINT_DesiredSerialNumber", 374134), #-1 MEANS ANY SN, CHANGE THIS TO MATCH YOUR UNIQUE VINT
+                                                                           ("VINT_DesiredPortNumber", 0), #CHANGE THIS TO MATCH YOUR UNIQUE VINT
                                                                            ("DesiredDeviceID", 96),
                                                                            ("WaitForAttached_TimeoutDuration_Milliseconds", 5000),
                                                                            ("NameToDisplay_UserSet", "Reuben's Test 1xRelay REL2001_0"),
                                                                            ("UsePhidgetsLoggingInternalToThisClassObjectFlag", 1),
                                                                            ("MainThread_TimeToSleepEachLoop", 0.002)])
 
-    if USE_RELAY_FLAG == 1:
+    if USE_Phidgets1xRelayREL2001_FLAG == 1:
         try:
             Phidgets1xRelayREL2001_ReubenPython2and3ClassObject = Phidgets1xRelayREL2001_ReubenPython2and3Class(Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_setup_dict)
-            RELAY_OPEN_FLAG = Phidgets1xRelayREL2001_ReubenPython2and3ClassObject.OBJECT_CREATED_SUCCESSFULLY_FLAG
+            Phidgets1xRelayREL2001_OPEN_FLAG = Phidgets1xRelayREL2001_ReubenPython2and3ClassObject.OBJECT_CREATED_SUCCESSFULLY_FLAG
 
         except:
             exceptions = sys.exc_info()[0]
@@ -410,17 +410,17 @@ if __name__ == '__main__':
 
     #################################################
     #################################################
-    if USE_MYPRINT_FLAG == 1:
+    if USE_MyPrint_FLAG == 1:
 
-        MyPrint_ReubenPython2and3ClassObject_GUIparametersDict = dict([("USE_GUI_FLAG", USE_GUI_FLAG and SHOW_IN_GUI_MYPRINT_FLAG),
+        MyPrint_ReubenPython2and3ClassObject_GUIparametersDict = dict([("USE_GUI_FLAG", USE_GUI_FLAG and SHOW_IN_GUI_MyPrint_FLAG),
                                                                         ("root", Tab_MyPrint),
                                                                         ("UseBorderAroundThisGuiObjectFlag", 0),
-                                                                        ("GUI_ROW", GUI_ROW_MYPRINT),
-                                                                        ("GUI_COLUMN", GUI_COLUMN_MYPRINT),
-                                                                        ("GUI_PADX", GUI_PADX_MYPRINT),
-                                                                        ("GUI_PADY", GUI_PADY_MYPRINT),
-                                                                        ("GUI_ROWSPAN", GUI_ROWSPAN_MYPRINT),
-                                                                        ("GUI_COLUMNSPAN", GUI_COLUMNSPAN_MYPRINT)])
+                                                                        ("GUI_ROW", GUI_ROW_MyPrint),
+                                                                        ("GUI_COLUMN", GUI_COLUMN_MyPrint),
+                                                                        ("GUI_PADX", GUI_PADX_MyPrint),
+                                                                        ("GUI_PADY", GUI_PADY_MyPrint),
+                                                                        ("GUI_ROWSPAN", GUI_ROWSPAN_MyPrint),
+                                                                        ("GUI_COLUMNSPAN", GUI_COLUMNSPAN_MyPrint)])
 
         MyPrint_ReubenPython2and3ClassObject_setup_dict = dict([("NumberOfPrintLines", 10),
                                                                 ("WidthOfPrintingLabel", 200),
@@ -430,7 +430,7 @@ if __name__ == '__main__':
 
         try:
             MyPrint_ReubenPython2and3ClassObject = MyPrint_ReubenPython2and3Class(MyPrint_ReubenPython2and3ClassObject_setup_dict)
-            MYPRINT_OPEN_FLAG = MyPrint_ReubenPython2and3ClassObject.OBJECT_CREATED_SUCCESSFULLY_FLAG
+            MyPrint_OPEN_FLAG = MyPrint_ReubenPython2and3ClassObject.OBJECT_CREATED_SUCCESSFULLY_FLAG
 
         except:
             exceptions = sys.exc_info()[0]
@@ -441,7 +441,7 @@ if __name__ == '__main__':
 
     #################################################
     #################################################
-    if USE_RELAY_FLAG == 1 and RELAY_OPEN_FLAG != 1:
+    if USE_Phidgets1xRelayREL2001_FLAG == 1 and Phidgets1xRelayREL2001_OPEN_FLAG != 1:
         print("Failed to open Phidgets1xRelayREL2001_ReubenPython2and3Class.")
         ExitProgram_Callback()
     #################################################
@@ -449,7 +449,7 @@ if __name__ == '__main__':
 
     #################################################
     #################################################
-    if USE_MYPRINT_FLAG == 1 and MYPRINT_OPEN_FLAG != 1:
+    if USE_MyPrint_FLAG == 1 and MyPrint_OPEN_FLAG != 1:
         print("Failed to open MyPrint_ReubenPython2and3ClassObject.")
         ExitProgram_Callback()
     #################################################
@@ -462,14 +462,31 @@ if __name__ == '__main__':
 
     while(EXIT_PROGRAM_FLAG == 0):
 
-        ###################################################
+        #################################################
+        #################################################
         CurrentTime_MainLoopThread = getPreciseSecondsTimeStampString() - StartingTime_MainLoopThread
         ###################################################
+        #################################################
 
-        ###################################################
-        if RELAY_OPEN_FLAG == 1:
+        ################################################# GET's
+        #################################################
+        if Phidgets1xRelayREL2001_OPEN_FLAG == 1:
 
-            ##################### SET's
+            Phidgets1xRelayREL2001_MostRecentDict = Phidgets1xRelayREL2001_ReubenPython2and3ClassObject.GetMostRecentDataDict()
+
+            if "Time" in Phidgets1xRelayREL2001_MostRecentDict:
+                Phidgets1xRelayREL2001_MostRecentDict_DigitalOutputsList_State = Phidgets1xRelayREL2001_MostRecentDict["DigitalOutputsList_State"]
+                Phidgets1xRelayREL2001_MostRecentDict_DigitalOutputsList_ErrorCallbackFiredFlag = Phidgets1xRelayREL2001_MostRecentDict["DigitalOutputsList_ErrorCallbackFiredFlag"]
+                Phidgets1xRelayREL2001_MostRecentDict_Time = Phidgets1xRelayREL2001_MostRecentDict["Time"]
+
+                #print("Phidgets1xRelayREL2001_MostRecentDict_DigitalOutputsList_State: " + str(Phidgets1xRelayREL2001_MostRecentDict_DigitalOutputsList_State))
+        #################################################
+        #################################################
+
+        ################################################# SET's
+        #################################################
+        if Phidgets1xRelayREL2001_OPEN_FLAG == 1:
+
             if USE_CycleThroughRelayStatesForTesting_FLAG == 1:
                 if CurrentTime_MainLoopThread - CycleThroughRelayStatesForTesting_LastTimeOfStateFlip_MainLoopThread >= CycleThroughRelayStatesForTesting_TimeBetweenStateFlips:
                     Phidgets1xRelayREL2001_ReubenPython2and3ClassObject.SetRelayState(CycleThroughRelayStatesForTesting_RelayStateToBeSet)
@@ -481,20 +498,9 @@ if __name__ == '__main__':
                     else:
                         CycleThroughRelayStatesForTesting_RelayStateToBeSet = 0
 
-            #####################
+        #################################################
+        #################################################
 
-            ##################### GET's
-            RELAY_MostRecentDict = Phidgets1xRelayREL2001_ReubenPython2and3ClassObject.GetMostRecentDataDict()
-
-            if "Time" in RELAY_MostRecentDict:
-                RELAY_MostRecentDict_DigitalOutputsList_State = RELAY_MostRecentDict["DigitalOutputsList_State"]
-                RELAY_MostRecentDict_DigitalOutputsList_ErrorCallbackFiredFlag = RELAY_MostRecentDict["DigitalOutputsList_ErrorCallbackFiredFlag"]
-                RELAY_MostRecentDict_Time = RELAY_MostRecentDict["Time"]
-
-                #print("RELAY_MostRecentDict_DigitalOutputsList_State: " + str(RELAY_MostRecentDict_DigitalOutputsList_State))
-            #####################
-
-        ###################################################
 
         time.sleep(0.002)
     #################################################
@@ -505,12 +511,12 @@ if __name__ == '__main__':
     print("Exiting main program 'test_program_for_Phidgets1xRelayREL2001_ReubenPython2and3Class.")
 
     #################################################
-    if RELAY_OPEN_FLAG == 1:
+    if Phidgets1xRelayREL2001_OPEN_FLAG == 1:
         Phidgets1xRelayREL2001_ReubenPython2and3ClassObject.ExitProgram_Callback()
     #################################################
 
     #################################################
-    if MYPRINT_OPEN_FLAG == 1:
+    if MyPrint_OPEN_FLAG == 1:
         MyPrint_ReubenPython2and3ClassObject.ExitProgram_Callback()
     #################################################
 

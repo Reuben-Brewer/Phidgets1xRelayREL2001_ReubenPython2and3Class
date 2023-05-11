@@ -2,6 +2,9 @@
 Phidgets1xRelayREL2001_ReubenPython2and3Class
 
 Wrapper (including ability to hook to Tkinter GUI) to control Phidgets 1-relay controller REL2001 (VINT).
+Under the hood, the REL2001 (as well as other relay Phidgets) are simply controlling Phidget's DigitalOutput() objects,
+so this same code can control other single-DigitalOutput Phidget devices like the
+Power Plug Phidget (ID: PSU1000_0, https://www.phidgets.com/?tier=3&catid=46&pcid=39&prodid=1142).
 
 From Phidgets' website:
 "The REL2002 is a simple, easy to use, mechanical relay.
@@ -23,7 +26,7 @@ www.reubotics.com
 
 Apache 2 License
 
-Software Revision G, 09/21/2022
+Software Revision H, 05/10/2023
 
 Verified working on: 
 Python 2.7, 3.8.
@@ -40,7 +43,7 @@ Raspberry Pi Buster
 Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies: ['future.builtins', 'Phidget22']
 Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_TestProgram: ['MyPrint_ReubenPython2and3Class']
 Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_NestedLayers: ['future.builtins']
-Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_All: ['future.builtins', 'MyPrint_ReubenPython2and3Class', 'Phidget22']
+Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_All:['future.builtins', 'MyPrint_ReubenPython2and3Class', 'Phidget22']
 
 https://pypi.org/project/Phidget22/#files
 
