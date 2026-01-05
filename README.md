@@ -1,23 +1,18 @@
-########################  
+########################
 
 Phidgets1xRelayREL2001_ReubenPython2and3Class
 
 Wrapper (including ability to hook to Tkinter GUI) to control Phidgets 1-relay controller REL2001 (VINT).
-Under the hood, the REL2001 (as well as other relay Phidgets) are simply controlling Phidget's DigitalOutput() objects, so this same code can control other single-DigitalOutput Phidget devices like the
+Under the hood, the REL2001 (as well as other relay Phidgets) are simply controlling Phidget's DigitalOutput() objects,
+so this same code can control other single-DigitalOutput Phidget devices like the
 Power Plug Phidget (ID: PSU1000_0, https://www.phidgets.com/?tier=3&catid=46&pcid=39&prodid=1142).
 
 From Phidgets' website:
-
 "The REL2002 is a simple, easy to use, mechanical relay.
-
 This Phidget connects to your computer through a VINT Hub.
-
 Rated for 210W of DC power or 1750 VA of AC power.
-
 DC applications - switch a circuit of up to 30V at 7A.
-
 AC applications - switch up to 12A or 277V AC, as long as the total power doesn't exceed 1750 VA.
-
 Isolation - A voltage spike on the load side of the relay will not damage the control side."
 
 Relay Phidget
@@ -34,15 +29,15 @@ www.reubotics.com
 
 Apache 2 License
 
-Software Revision H, 05/10/2023
+Software Revision I, 01/02/2026
 
-Verified working on: 
+Verified working on:
 
-Python 2.7, 3.8.
+Python 3.11/12.
 
-Windows 8.1, 10 64-bit
+Windows 10/11 64-bit
 
-Raspberry Pi Buster 
+Raspberry Pi Bookworm
 
 (no Mac testing yet)
 
@@ -50,15 +45,15 @@ Raspberry Pi Buster
 
 ########################  
 
-########################### Python module installation instructions, all OS's
+######################## Python module installation instructions, all OS's
 
-Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies: ['future.builtins', 'Phidget22']
+Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies: ['Phidget22', 'ReubenGithubCodeModulePaths']
 
-Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_TestProgram: ['MyPrint_ReubenPython2and3Class']
+Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_TestProgram: ['MyPrint_ReubenPython2and3Class', 'ReubenGithubCodeModulePaths']
 
-Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_NestedLayers: ['future.builtins']
+Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_NestedLayers: []
 
-Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_All:['future.builtins', 'MyPrint_ReubenPython2and3Class', 'Phidget22']
+Phidgets1xRelayREL2001_ReubenPython2and3Class, ListOfModuleDependencies_All:['MyPrint_ReubenPython2and3Class', 'Phidget22', 'ReubenGithubCodeModulePaths']
 
 https://pypi.org/project/Phidget22/#files
 
