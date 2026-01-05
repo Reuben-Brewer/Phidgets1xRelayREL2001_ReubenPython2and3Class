@@ -6,36 +6,43 @@ reuben.brewer@gmail.com,
 www.reubotics.com
 
 Apache 2 License
-Software Revision H, 05/10/2023
+Software Revision I, 01/02/2026
 
-Verified working on: Python 2.7, 3.8 for Windows 8.1, 10 64-bit and Raspberry Pi Buster (no Mac testing yet).
+Verified working on: Python 3.12/13 for Windows 10/11 64-bit and Raspberry Pi Bookworm (no Mac testing yet).
 '''
 
 __author__ = 'reuben.brewer'
 
+##########################################################################################################
+##########################################################################################################
+
 #########################################################
-from Phidgets1xRelayREL2001_ReubenPython2and3Class import *
+import ReubenGithubCodeModulePaths #Replaces the need to have "ReubenGithubCodeModulePaths.pth" within "C:\Anaconda3\Lib\site-packages".
+ReubenGithubCodeModulePaths.Enable()
+#########################################################
+
+#########################################################
 from MyPrint_ReubenPython2and3Class import *
+from Phidgets1xRelayREL2001_ReubenPython2and3Class import *
 #########################################################
 
 #########################################################
 import os
 import sys
 import platform
-import time, datetime
+import time
+import datetime
 import threading
+import traceback
+import math
+import keyboard
 import collections
 #########################################################
 
 #########################################################
-if sys.version_info[0] < 3:
-    from Tkinter import * #Python 2
-    import tkFont
-    import ttk
-else:
-    from tkinter import * #Python 3
-    import tkinter.font as tkFont #Python 3
-    from tkinter import ttk
+from tkinter import *
+import tkinter.font as tkFont
+from tkinter import ttk
 #########################################################
 
 #########################################################
@@ -45,6 +52,9 @@ if platform.system() == "Windows":
     winmm = ctypes.WinDLL('winmm')
     winmm.timeBeginPeriod(1) #Set minimum timer resolution to 1ms so that time.sleep(0.001) behaves properly.
 #########################################################
+
+##########################################################################################################
+##########################################################################################################
 
 ###########################################################################################################
 ##########################################################################################################
@@ -57,46 +67,34 @@ def getPreciseSecondsTimeStampString():
 
 ##########################################################################################################
 ##########################################################################################################
-def TestButtonResponse():
-    global MyPrint_ReubenPython2and3ClassObject
-    global USE_MyPrint_FLAG
-
-    if USE_MyPrint_FLAG == 1:
-        MyPrint_ReubenPython2and3ClassObject.my_print("Test Button was Pressed!")
-    else:
-        print("Test Button was Pressed!")
-##########################################################################################################
-##########################################################################################################
-
-##########################################################################################################
-##########################################################################################################
 def GUI_update_clock():
     global root
     global EXIT_PROGRAM_FLAG
     global GUI_RootAfterCallbackInterval_Milliseconds
     global USE_GUI_FLAG
 
-    global Phidgets1xRelayREL2001_ReubenPython2and3ClassObject
+    global Phidgets1xRelayREL2001_Object
     global Phidgets1xRelayREL2001_OPEN_FLAG
     global SHOW_IN_GUI_Phidgets1xRelayREL2001_FLAG
 
-    global MyPrint_ReubenPython2and3ClassObject
+    global MyPrint_Object
     global MyPrint_OPEN_FLAG
     global SHOW_IN_GUI_MyPrint_FLAG
 
     if USE_GUI_FLAG == 1:
+
         if EXIT_PROGRAM_FLAG == 0:
         #########################################################
         #########################################################
 
             #########################################################
             if Phidgets1xRelayREL2001_OPEN_FLAG == 1 and SHOW_IN_GUI_Phidgets1xRelayREL2001_FLAG == 1:
-                Phidgets1xRelayREL2001_ReubenPython2and3ClassObject.GUI_update_clock()
+                Phidgets1xRelayREL2001_Object.GUI_update_clock()
             #########################################################
 
             #########################################################
             if MyPrint_OPEN_FLAG == 1 and SHOW_IN_GUI_MyPrint_FLAG == 1:
-                MyPrint_ReubenPython2and3ClassObject.GUI_update_clock()
+                MyPrint_Object.GUI_update_clock()
             #########################################################
 
             root.after(GUI_RootAfterCallbackInterval_Milliseconds, GUI_update_clock)
@@ -108,7 +106,7 @@ def GUI_update_clock():
 
 ##########################################################################################################
 ##########################################################################################################
-def ExitProgram_Callback():
+def ExitProgram_Callback(OptionalArugment = 0):
     global EXIT_PROGRAM_FLAG
 
     print("ExitProgram_Callback event fired!")
@@ -128,9 +126,19 @@ def GUI_Thread():
     global GUI_RootAfterCallbackInterval_Milliseconds
     global USE_TABS_IN_GUI_FLAG
 
+    global Phidgets1xRelayREL2001_Object
+    global Phidgets1xRelayREL2001_OPEN_FLAG
+
+    global MyPrint_Object
+    global MyPrint_OPEN_FLAG
+
     ################################################# KEY GUI LINE
     #################################################
     root = Tk()
+
+    root.protocol("WM_DELETE_WINDOW", ExitProgram_Callback)  # Set the callback function for when the window's closed.
+    root.title("test_program_for_Phidgets1xRelayREL2001_ReubenPython2and3Class")
+    root.geometry('%dx%d+%d+%d' % (root_width, root_height, root_Xpos, root_Ypos)) # set the dimensions of the screen and where it is placed
     #################################################
     #################################################
 
@@ -160,6 +168,7 @@ def GUI_Thread():
         TabStyle = ttk.Style()
         TabStyle.configure('TNotebook.Tab', font=('Helvetica', '12', 'bold'))
         #############
+
         #################################################
     else:
         #################################################
@@ -172,29 +181,45 @@ def GUI_Thread():
     #################################################
 
     #################################################
-    TestButton = Button(Tab_MainControls, text='Test Button', state="normal", width=20, command=lambda i=1: TestButtonResponse())
-    TestButton.grid(row=0, column=0, padx=5, pady=1)
+    #################################################
+    if Phidgets1xRelayREL2001_OPEN_FLAG == 1:
+        Phidgets1xRelayREL2001_Object.CreateGUIobjects(TkinterParent=Tab_Phidgets1xRelayREL2001)
+    #################################################
     #################################################
 
     #################################################
-    root.protocol("WM_DELETE_WINDOW", ExitProgram_Callback)  # Set the callback function for when the window's closed.
-    root.title("test_program_for_Phidgets1xRelayREL2001_ReubenPython2and3Class")
-    root.geometry('%dx%d+%d+%d' % (root_width, root_height, root_Xpos, root_Ypos)) # set the dimensions of the screen and where it is placed
+    #################################################
+    if MyPrint_OPEN_FLAG == 1:
+        MyPrint_Object.CreateGUIobjects(TkinterParent=Tab_MyPrint)
+    #################################################
+    #################################################
+
+    #################################################
+    #################################################
     root.after(GUI_RootAfterCallbackInterval_Milliseconds, GUI_update_clock)
     root.mainloop()
     #################################################
+    #################################################
 
+    #################################################
     #################################################
     root.quit() #Stop the GUI thread, MUST BE CALLED FROM GUI_Thread
     root.destroy() #Close down the GUI thread, MUST BE CALLED FROM GUI_Thread
     #################################################
+    #################################################
 
 ##########################################################################################################
 ##########################################################################################################
 
+##########################################################################################################
+##########################################################################################################
 ##########################################################################################################
 ##########################################################################################################
 if __name__ == '__main__':
+
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
 
     #################################################
     #################################################
@@ -233,6 +258,9 @@ if __name__ == '__main__':
 
     global USE_MyPrint_FLAG
     USE_MyPrint_FLAG = 1
+
+    global USE_KEYBOARD_FLAG
+    USE_KEYBOARD_FLAG = 1
 
     global USE_CycleThroughRelayStatesForTesting_FLAG
     USE_CycleThroughRelayStatesForTesting_FLAG = 1
@@ -327,7 +355,7 @@ if __name__ == '__main__':
 
     #################################################
     #################################################
-    global Phidgets1xRelayREL2001_ReubenPython2and3ClassObject
+    global Phidgets1xRelayREL2001_Object
 
     global Phidgets1xRelayREL2001_OPEN_FLAG
     Phidgets1xRelayREL2001_OPEN_FLAG = -1
@@ -348,62 +376,102 @@ if __name__ == '__main__':
 
     #################################################
     #################################################
-    global MyPrint_ReubenPython2and3ClassObject
+    global MyPrint_Object
 
     global MyPrint_OPEN_FLAG
     MyPrint_OPEN_FLAG = -1
     #################################################
     #################################################
 
-    #################################################  KEY GUI LINE
-    #################################################
-    if USE_GUI_FLAG == 1:
-        print("Starting GUI thread...")
-        GUI_Thread_ThreadingObject = threading.Thread(target=GUI_Thread)
-        GUI_Thread_ThreadingObject.setDaemon(True) #Should mean that the GUI thread is destroyed automatically when the main thread is destroyed.
-        GUI_Thread_ThreadingObject.start()
-        time.sleep(0.5)  #Allow enough time for 'root' to be created that we can then pass it into other classes.
-    else:
-        root = None
-        Tab_MainControls = None
-        Tab_Phidgets1xRelayREL2001 = None
-        Tab_MyPrint = None
-    #################################################
-    #################################################
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
+
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
 
     #################################################
     #################################################
-    global Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_GUIparametersDict
-    Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_GUIparametersDict = dict([("USE_GUI_FLAG", USE_GUI_FLAG and SHOW_IN_GUI_Phidgets1xRelayREL2001_FLAG),
-                                    ("root", Tab_Phidgets1xRelayREL2001),
-                                    ("EnableInternal_MyPrint_Flag", 1),
-                                    ("NumberOfPrintLines", 10),
-                                    ("UseBorderAroundThisGuiObjectFlag", 0),
-                                    ("GUI_ROW", GUI_ROW_Phidgets1xRelayREL2001),
-                                    ("GUI_COLUMN", GUI_COLUMN_Phidgets1xRelayREL2001),
-                                    ("GUI_PADX", GUI_PADX_Phidgets1xRelayREL2001),
-                                    ("GUI_PADY", GUI_PADY_Phidgets1xRelayREL2001),
-                                    ("GUI_ROWSPAN", GUI_ROWSPAN_Phidgets1xRelayREL2001),
-                                    ("GUI_COLUMNSPAN", GUI_COLUMNSPAN_Phidgets1xRelayREL2001)])
+    global Phidgets1xRelayREL2001_GUIparametersDict
+    Phidgets1xRelayREL2001_GUIparametersDict = dict([("USE_GUI_FLAG", USE_GUI_FLAG and SHOW_IN_GUI_Phidgets1xRelayREL2001_FLAG),
+                                                    ("EnableInternal_MyPrint_Flag", 0),
+                                                    ("NumberOfPrintLines", 10),
+                                                    ("UseBorderAroundThisGuiObjectFlag", 0),
+                                                    ("GUI_ROW", GUI_ROW_Phidgets1xRelayREL2001),
+                                                    ("GUI_COLUMN", GUI_COLUMN_Phidgets1xRelayREL2001),
+                                                    ("GUI_PADX", GUI_PADX_Phidgets1xRelayREL2001),
+                                                    ("GUI_PADY", GUI_PADY_Phidgets1xRelayREL2001),
+                                                    ("GUI_ROWSPAN", GUI_ROWSPAN_Phidgets1xRelayREL2001),
+                                                    ("GUI_COLUMNSPAN", GUI_COLUMNSPAN_Phidgets1xRelayREL2001)])
 
-    global Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_setup_dict
-    Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_setup_dict = dict([("GUIparametersDict", Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_GUIparametersDict),
-                                                                           ("VINT_DesiredSerialNumber", 374134), #-1 MEANS ANY SN, CHANGE THIS TO MATCH YOUR UNIQUE VINT
-                                                                           ("VINT_DesiredPortNumber", 0), #CHANGE THIS TO MATCH YOUR UNIQUE VINT
-                                                                           ("DesiredDeviceID", 96),
-                                                                           ("WaitForAttached_TimeoutDuration_Milliseconds", 5000),
-                                                                           ("NameToDisplay_UserSet", "Reuben's Test 1xRelay REL2001_0"),
-                                                                           ("UsePhidgetsLoggingInternalToThisClassObjectFlag", 1),
-                                                                           ("MainThread_TimeToSleepEachLoop", 0.002)])
+    global Phidgets1xRelayREL2001_SetupDict
+    Phidgets1xRelayREL2001_SetupDict = dict([("GUIparametersDict", Phidgets1xRelayREL2001_GUIparametersDict),
+                                               ("VINT_DesiredSerialNumber", -1), #-1 MEANS ANY SN, CHANGE THIS TO MATCH YOUR UNIQUE VINT
+                                               ("VINT_DesiredPortNumber", 0), #CHANGE THIS TO MATCH YOUR UNIQUE VINT
+                                               ("DesiredDeviceID", 96),
+                                               ("WaitForAttached_TimeoutDuration_Milliseconds", 5000),
+                                               ("NameToDisplay_UserSet", "Reuben's Test 1xRelay REL2001_0"),
+                                               ("UsePhidgetsLoggingInternalToThisClassObjectFlag", 1),
+                                               ("MainThread_TimeToSleepEachLoop", 0.002)])
 
-    if USE_Phidgets1xRelayREL2001_FLAG == 1:
+    if USE_Phidgets1xRelayREL2001_FLAG == 1 and EXIT_PROGRAM_FLAG == 0:
         try:
-            Phidgets1xRelayREL2001_ReubenPython2and3ClassObject = Phidgets1xRelayREL2001_ReubenPython2and3Class(Phidgets1xRelayREL2001_ReubenPython2and3ClassObject_setup_dict)
-            Phidgets1xRelayREL2001_OPEN_FLAG = Phidgets1xRelayREL2001_ReubenPython2and3ClassObject.OBJECT_CREATED_SUCCESSFULLY_FLAG
+            Phidgets1xRelayREL2001_Object = Phidgets1xRelayREL2001_ReubenPython2and3Class(Phidgets1xRelayREL2001_SetupDict)
+            Phidgets1xRelayREL2001_OPEN_FLAG = Phidgets1xRelayREL2001_Object.OBJECT_CREATED_SUCCESSFULLY_FLAG
 
         except:
             exceptions = sys.exc_info()[0]
-            print("Phidgets1xRelayREL2001_ReubenPython2and3ClassObject __init__: Exceptions: %s" % exceptions, 0)
+            print("Phidgets1xRelayREL2001_Object __init__: Exceptions: %s" % exceptions, 0)
+            traceback.print_exc()
+    #################################################
+    #################################################
+    
+    #################################################
+    #################################################
+    if USE_Phidgets1xRelayREL2001_FLAG == 1:
+        if EXIT_PROGRAM_FLAG == 0:
+            if Phidgets1xRelayREL2001_OPEN_FLAG != 1:
+                print("Failed to open Phidgets1xRelayREL2001_Object.")
+                ExitProgram_Callback()
+    #################################################
+    #################################################
+
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
+
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
+
+    #################################################
+    #################################################
+    global MyPrint_GUIparametersDict
+    MyPrint_GUIparametersDict = dict([("USE_GUI_FLAG", USE_GUI_FLAG and SHOW_IN_GUI_MyPrint_FLAG),
+                                        ("UseBorderAroundThisGuiObjectFlag", 0),
+                                        ("GUI_ROW", GUI_ROW_MyPrint),
+                                        ("GUI_COLUMN", GUI_COLUMN_MyPrint),
+                                        ("GUI_PADX", GUI_PADX_MyPrint),
+                                        ("GUI_PADY", GUI_PADY_MyPrint),
+                                        ("GUI_ROWSPAN", GUI_ROWSPAN_MyPrint),
+                                        ("GUI_COLUMNSPAN", GUI_COLUMNSPAN_MyPrint)])
+
+    global MyPrint_SetupDict
+    MyPrint_SetupDict = dict([("NumberOfPrintLines", 10),
+                            ("WidthOfPrintingLabel", 200),
+                            ("PrintToConsoleFlag", 1),
+                            ("LogFileNameFullPath", os.path.join(os.getcwd(), "TestLog.txt")),
+                            ("GUIparametersDict", MyPrint_GUIparametersDict)])
+
+    if USE_MyPrint_FLAG == 1 and EXIT_PROGRAM_FLAG == 0:
+        try:
+            MyPrint_Object = MyPrint_ReubenPython2and3Class(MyPrint_SetupDict)
+            MyPrint_OPEN_FLAG = MyPrint_Object.OBJECT_CREATED_SUCCESSFULLY_FLAG
+
+        except:
+            exceptions = sys.exc_info()[0]
+            print("MyPrint_Object __init__: Exceptions: %s" % exceptions)
             traceback.print_exc()
     #################################################
     #################################################
@@ -411,52 +479,45 @@ if __name__ == '__main__':
     #################################################
     #################################################
     if USE_MyPrint_FLAG == 1:
-
-        MyPrint_ReubenPython2and3ClassObject_GUIparametersDict = dict([("USE_GUI_FLAG", USE_GUI_FLAG and SHOW_IN_GUI_MyPrint_FLAG),
-                                                                        ("root", Tab_MyPrint),
-                                                                        ("UseBorderAroundThisGuiObjectFlag", 0),
-                                                                        ("GUI_ROW", GUI_ROW_MyPrint),
-                                                                        ("GUI_COLUMN", GUI_COLUMN_MyPrint),
-                                                                        ("GUI_PADX", GUI_PADX_MyPrint),
-                                                                        ("GUI_PADY", GUI_PADY_MyPrint),
-                                                                        ("GUI_ROWSPAN", GUI_ROWSPAN_MyPrint),
-                                                                        ("GUI_COLUMNSPAN", GUI_COLUMNSPAN_MyPrint)])
-
-        MyPrint_ReubenPython2and3ClassObject_setup_dict = dict([("NumberOfPrintLines", 10),
-                                                                ("WidthOfPrintingLabel", 200),
-                                                                ("PrintToConsoleFlag", 1),
-                                                                ("LogFileNameFullPath", os.getcwd() + "//TestLog.txt"),
-                                                                ("GUIparametersDict", MyPrint_ReubenPython2and3ClassObject_GUIparametersDict)])
-
-        try:
-            MyPrint_ReubenPython2and3ClassObject = MyPrint_ReubenPython2and3Class(MyPrint_ReubenPython2and3ClassObject_setup_dict)
-            MyPrint_OPEN_FLAG = MyPrint_ReubenPython2and3ClassObject.OBJECT_CREATED_SUCCESSFULLY_FLAG
-
-        except:
-            exceptions = sys.exc_info()[0]
-            print("MyPrint_ReubenPython2and3ClassObject __init__: Exceptions: %s" % exceptions)
-            traceback.print_exc()
+        if EXIT_PROGRAM_FLAG == 0:
+            if MyPrint_OPEN_FLAG != 1:
+                print("Failed to open MyPrint_Object.")
+                ExitProgram_Callback()
     #################################################
     #################################################
 
-    #################################################
-    #################################################
-    if USE_Phidgets1xRelayREL2001_FLAG == 1 and Phidgets1xRelayREL2001_OPEN_FLAG != 1:
-        print("Failed to open Phidgets1xRelayREL2001_ReubenPython2and3Class.")
-        ExitProgram_Callback()
-    #################################################
-    #################################################
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
 
-    #################################################
-    #################################################
-    if USE_MyPrint_FLAG == 1 and MyPrint_OPEN_FLAG != 1:
-        print("Failed to open MyPrint_ReubenPython2and3ClassObject.")
-        ExitProgram_Callback()
-    #################################################
-    #################################################
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
+    if USE_KEYBOARD_FLAG == 1 and EXIT_PROGRAM_FLAG == 0:
+        keyboard.on_press_key("esc", ExitProgram_Callback)
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
 
-    #################################################
-    #################################################
+    ########################################################################################################## KEY GUI LINE
+    ##########################################################################################################
+    ##########################################################################################################
+    if USE_GUI_FLAG == 1 and EXIT_PROGRAM_FLAG == 0:
+        print("Starting GUI thread...")
+        GUI_Thread_ThreadingObject = threading.Thread(target=GUI_Thread, daemon=True) #Daemon=True means that the GUI thread is destroyed automatically when the main thread is destroyed
+        GUI_Thread_ThreadingObject.start()
+    else:
+        root = None
+        Tab_MainControls = None
+        Tab_Phidgets1xRelayREL2001 = None
+        Tab_MyPrint = None
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
+
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
     print("Starting main loop 'test_program_for_Phidgets1xRelayREL2001_ReubenPython2and3Class.")
     StartingTime_MainLoopThread = getPreciseSecondsTimeStampString()
 
@@ -472,7 +533,7 @@ if __name__ == '__main__':
         #################################################
         if Phidgets1xRelayREL2001_OPEN_FLAG == 1:
 
-            Phidgets1xRelayREL2001_MostRecentDict = Phidgets1xRelayREL2001_ReubenPython2and3ClassObject.GetMostRecentDataDict()
+            Phidgets1xRelayREL2001_MostRecentDict = Phidgets1xRelayREL2001_Object.GetMostRecentDataDict()
 
             if "Time" in Phidgets1xRelayREL2001_MostRecentDict:
                 Phidgets1xRelayREL2001_MostRecentDict_DigitalOutputsList_State = Phidgets1xRelayREL2001_MostRecentDict["DigitalOutputsList_State"]
@@ -488,40 +549,52 @@ if __name__ == '__main__':
         if Phidgets1xRelayREL2001_OPEN_FLAG == 1:
 
             if USE_CycleThroughRelayStatesForTesting_FLAG == 1:
+
                 if CurrentTime_MainLoopThread - CycleThroughRelayStatesForTesting_LastTimeOfStateFlip_MainLoopThread >= CycleThroughRelayStatesForTesting_TimeBetweenStateFlips:
-                    Phidgets1xRelayREL2001_ReubenPython2and3ClassObject.SetRelayState(CycleThroughRelayStatesForTesting_RelayStateToBeSet)
+
+                    Phidgets1xRelayREL2001_Object.SetRelayState(CycleThroughRelayStatesForTesting_RelayStateToBeSet)
                     CycleThroughRelayStatesForTesting_LastTimeOfStateFlip_MainLoopThread = CurrentTime_MainLoopThread
-                    print("CycleThroughRelayStatesForTesting_LastTimeOfStateFlip_MainLoopThread: " + str(CycleThroughRelayStatesForTesting_LastTimeOfStateFlip_MainLoopThread))
+                    #print("CycleThroughRelayStatesForTesting_LastTimeOfStateFlip_MainLoopThread: " + str(CycleThroughRelayStatesForTesting_LastTimeOfStateFlip_MainLoopThread))
 
                     if CycleThroughRelayStatesForTesting_RelayStateToBeSet == 0:
                         CycleThroughRelayStatesForTesting_RelayStateToBeSet = 1
+
                     else:
                         CycleThroughRelayStatesForTesting_RelayStateToBeSet = 0
 
         #################################################
         #################################################
 
-
         time.sleep(0.002)
-    #################################################
-    #################################################
 
-    ################################################# THIS IS THE EXIT ROUTINE!
-    #################################################
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
+
+    ########################################################################################################## THIS IS THE EXIT ROUTINE!
+    ##########################################################################################################
+    ##########################################################################################################
+
     print("Exiting main program 'test_program_for_Phidgets1xRelayREL2001_ReubenPython2and3Class.")
 
     #################################################
     if Phidgets1xRelayREL2001_OPEN_FLAG == 1:
-        Phidgets1xRelayREL2001_ReubenPython2and3ClassObject.ExitProgram_Callback()
+        Phidgets1xRelayREL2001_Object.ExitProgram_Callback()
     #################################################
 
     #################################################
     if MyPrint_OPEN_FLAG == 1:
-        MyPrint_ReubenPython2and3ClassObject.ExitProgram_Callback()
+        MyPrint_Object.ExitProgram_Callback()
     #################################################
 
     #################################################
     #################################################
 
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
+
+##########################################################################################################
+##########################################################################################################
 ##########################################################################################################
 ##########################################################################################################
